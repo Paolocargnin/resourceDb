@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #{title}
+
+	div(ng-controller='json')
+		select(ng-model='method')
+			option GET
+			option JSONP
+		input(type='text',ng-model='url')
+		button#fetchBtn(ng-click='fetch()') fetch
+		br
+		button#samplegetbtn(ng-click='updateModel(GET,"/users/db")') Sample GET
+		pre http status code: {{status}}
+		pre http status code: {{data}}
