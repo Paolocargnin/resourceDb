@@ -17,21 +17,28 @@ angular.module('httpExample', [])
 	function($scope, $http, $templateCache) {
 		$scope.method = 'GET';
 		$scope.url = 'http-hello.html';
+		$scope.resources={};
+		$scope.taggedImages=[];
+		$scope.realImages=[];
+		$scope.toTaggedImages=[];
 
-		$scope.fetch = function() {
-			$scope.code = null;
-			$scope.response = null;
+		$http({
+			method:'GET',
+			url: '/users/db/',
+		}).
+		success(function(data){
+			$scope.resources=JSON.parse(data);
+			$scope.taggedImages= _.pluck($scope.resources.images, 'path');
+		});
 
-			$http({method: $scope.method, url: $scope.url, cache: $templateCache}).
-			success(function(data, status) {
-				$scope.status = status;
-				$scope.data = data;
-			}).
-			error(function(data, status) {
-				$scope.data = data || "Request failed";
-				$scope.status = status;
-			});
-		};
+		$http({
+			method:'GET',
+			url: '/users/images/',
+		}).
+		success(function(data){
+			$scope.realImages=data;
+			$scope.toTaggedImages= _.difference($scope.realImages, $scope.taggedImages);
+		});
 
 		$scope.updateModel = function(method, url) {
 			$scope.method = method;
