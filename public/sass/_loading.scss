@@ -1,0 +1,54 @@
+.loading{
+	$loadingHeight:40px;
+	$finishHeight:100px;
+	position: absolute;
+	background: $firstColor;
+	color: #fff;
+	width:0%;
+	transition:all .3s;
+	line-height: $loadingHeight;
+	min-height: $loadingHeight;
+	overflow: hidden;
+	cursor: pointer;
+	top: 0;
+	bottom:90%;
+	@extend %fadeInDown;
+	.tagImages{
+		transition:all 1s;
+		display: none;
+		line-height: 1.4em;
+	}
+	.openDialog{
+		box-sizing:border-box;
+		padding: 0 $padding;
+		font-weight: normal;
+		i{
+			@extend .fa-exclamation-circle;
+			@extend %fadeIn;
+		}
+		*{
+			margin:0
+		}
+	}
+	.openDialog:hover{
+		background: darken($firstColor,10%);
+		> i{
+			@extend %fadeInDown;
+			@extend .fa-chevron-circle-down;
+		}
+	}
+	&.starting{
+		width: 30%;
+	}
+	&.finished{
+		width: 100%;
+		min-height:$finishHeight; 
+		line-height: $finishHeight;
+	}
+	&.open{
+		bottom:1%;
+		.tagImages{
+			display: flex;
+		}
+	}
+}

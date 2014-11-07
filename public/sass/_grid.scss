@@ -1,0 +1,238 @@
+$gridDefault: (
+	prefixRow: 'row',
+	prefixCol: 'col',
+	dividers: (1, 2, 3, 4, 5, 6, 10, 12),
+	showMobileClass: 0,
+	sizes: (
+			xs: (
+				from: 0px
+				),
+			sm: (
+			from: 768px
+				),
+			m: (
+				from: 992px
+				),
+			l: (
+				from: 1200px
+				),
+		)
+);
+
+$gridOptions: $gridDefault;
+
+@if variable-exists(gridOpt) {
+	$gridOptions :  map-merge($gridDefault,$gridOpts); //the last Wins
+}
+
+// /* ----
+//			Building the percatage Widht
+//											---- */
+
+.#{map-get($gridOptions, prefixRow)} {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.#{map-get($gridOptions, prefixRow)}.reverse {
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-flex-wrap: row-reverse;
+  -ms-flex-wrap: row-reverse;
+  flex-wrap: row-reverse;
+}
+
+.#{map-get($gridOptions, prefixRow)} > *[class*="#{map-get($gridOptions,prefixCol)}"]{
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-flex: 0;
+	-webkit-flex-grow: 0;
+	-ms-flex-positive: 0;
+	flex-grow: 0;
+	-webkit-flex-shrink: 0;
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+}
+
+.#{map-get($gridOptions, prefixRow)} > *[class*="#{map-get($gridOptions,prefixCol)}"].reverse {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+  -webkit-flex-wrap: column-reverse;
+  -ms-flex-wrap: column-reverse;
+  flex-wrap: column-reverse;
+}
+
+
+// Trying 
+// @for $i from 1 through length(map-get($gridDefault, sizes)) {
+// 	$name:nth;
+// 	$sizeInfo: no;
+
+// 	.classProva#{$i}-#{$name}-#{$sizeInfo}{
+// 		display: none;
+// 	}
+
+// }
+
+
+@each $name, $sizeInfo in map-get($gridOptions, sizes){
+
+	// if it is the Mobile Class (first of the each) showMobileCLass is set to 0 
+	// don't show the _ClassName  - TODO
+	// @if index(map-get($gridOptions, sizes),$sizeInfo) == 0{
+	// 	$className :  '';
+	// } @else {
+	//  	$className : -#{$name};
+	// }
+ 	$className : -#{$name};
+	
+ 	// $className : -#{$name};
+	$prefix: #{map-get($gridOptions, prefixCol)}#{$className};
+
+	@media only screen and (min-width: map-get($sizeInfo,from)) {
+
+		//some utility Class
+		.start-#{$name} {
+		  -webkit-box-pack: start;
+		  -webkit-justify-content: flex-start;
+		  -ms-flex-pack: start;
+		  justify-content: flex-start;
+		  text-align: start;
+		}
+
+		.center-#{$name} {
+		  -webkit-box-pack: center;
+		  -webkit-justify-content: center;
+		  -ms-flex-pack: center;
+		  justify-content: center;
+		  text-align: center;
+		}
+
+		.end-#{$name} {
+		  -webkit-box-pack: end;
+		  -webkit-justify-content: flex-end;
+		  -ms-flex-pack: end;
+		  justify-content: flex-end;
+		  text-align: end;
+		}
+
+		.top-#{$name} {
+		  -webkit-box-align: start;
+		  -webkit-align-items: flex-start;
+		  -ms-flex-align: start;
+		  align-items: flex-start;
+		}
+
+		.middle-#{$name} {
+		  -webkit-box-align: center;
+		  -webkit-align-items: center;
+		  -ms-flex-align: center;
+		  align-items: center;
+		}
+
+		.bottom-#{$name} {
+		  -webkit-box-align: end;
+		  -webkit-align-items: flex-end;
+		  -ms-flex-align: end;
+		  align-items: flex-end;
+		}
+
+		.around-#{$name} {
+		  -webkit-justify-content: space-around;
+		  -ms-flex-pack: distribute;
+		  justify-content: space-around;
+		}
+
+		.between-#{$name} {
+		  -webkit-box-pack: justify;
+		  -webkit-justify-content: space-between;
+		  -ms-flex-pack: justify;
+		  justify-content: space-between;
+		}
+
+		.first-#{$name} {
+		  -webkit-box-ordinal-group: 0;
+		  -webkit-order: -1;
+		  -ms-flex-order: -1;
+		  order: -1;
+		}
+
+		.last-#{$name} {
+		  -webkit-box-ordinal-group: 2;
+		  -webkit-order: 1;
+		  -ms-flex-order: 1;
+		  order: 1;
+		}
+
+
+		//the auto row / the columns it will adapt 
+		.#{map-get($gridOptions,prefixCol)}-#{$name}{
+			-webkit-box-flex: 1;
+			-webkit-flex-grow: 1;
+			-ms-flex-positive: 1;
+			flex-grow: 1;
+			-webkit-flex-basis: 0;
+			-ms-flex-preferred-size: 0;
+			flex-basis: 0;
+			max-width: 100%;			
+		}
+
+		$widths:();
+		@each $divider in map-get($gridOptions, dividers){
+			@for $i from 1 to  $divider {
+				$theWidth : $i / $divider * 100%;
+				@if map-has-key($widths, $theWidth){
+					//if there is I put the extend,
+					.#{$prefix}-#{$i}-#{$divider}{
+						@extend .#{map-get( $widths , $theWidth )};
+					};
+				} @else {
+					// i create a new widths
+					$widths: map-merge(
+						(
+							$theWidth : #{$prefix}-#{$i}-#{$divider}
+						),
+						$widths);
+					.#{$prefix}-#{$i}-#{$divider}{
+							 -webkit-flex-basis : $theWidth;
+						-ms-flex-preferred-size : $theWidth;
+									 flex-basis : $theWidth;
+									  max-width : $theWidth;
+					};
+					.#{$prefix}-offset-#{$i}-#{$divider}{
+						margin-left: $theWidth;
+					}
+				}
+
+			}	
+		}
+	}
+
+ }
+

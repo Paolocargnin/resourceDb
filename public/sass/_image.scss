@@ -1,0 +1,27 @@
+.imageResource{
+	position: relative;
+	padding:0;
+	margin: $margin;
+	img{
+		max-width:100%;
+	}
+	.tagSection{
+		i{
+			position: absolute;
+			color: #333;
+			top: 17px;
+			left: 15px;
+			font-size: 1.6em;
+		}
+		position: absolute;
+		bottom:0;
+		width: 100%;
+		box-sizing:border-box;
+		padding: $padding;
+		background: rgba(0,0,0,.5);
+	}
+	input[type="text"]{
+		padding-left: 40px;
+		font-size: 24px;
+	}
+}

@@ -1,0 +1,19 @@
+$firstColor: #058789;
+$secondColor: #181619;
+$thirdColor: #E32F21;
+
+//sizes
+$padding: 10px;
+$margin: 15px;
+
+@import "fa/font-awesome.scss";
+@import "animate/animate.scss";
+
+@import "base";
+
+@import "image"; 
+
+@import "grid";
+
+@import "loading";
+

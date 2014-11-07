@@ -1,16 +1,16 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
-
-	div(ng-controller='json')
-		select(ng-model='method')
-			option GET
-			option JSONP
-		input(type='text',ng-model='url')
-		button#fetchBtn(ng-click='fetch()') fetch
-		br
-		button#samplegetbtn(ng-click='updateModel(GET,"/users/db")') Sample GET
-		pre http status code: {{status}}
-		pre http status code: {{data}}
+	section(ng-controller='imageController')
+		header#tagImages.loading(ng-if='toTaggedImages.length>0', ng-class='{"starting" : loading < 0.5, "finished" : loading >= 0.5,"open" : loading > 1 }')
+			section.tagImages(ng-if='loading > 1')
+				article.imageResource.col-xs-1-1.col-sm-1-2(ng-repeat='image in toTaggedImages')
+					img(src="{{image}}")
+					.tagSection
+						i.fa.fa-tags
+						input(type='text',placeholder='Type tag here')
+			.openDialog(ng-click="openTagImages()")
+				h2
+					i.fa.fa-exclamation-triangle
+					text=' There are new images to Tag! ({{ toTaggedImages.length }}).'
+					#{text}
