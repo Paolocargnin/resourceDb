@@ -35,4 +35,16 @@ angular.module('httpExample', [])
 			$scope.method = method;
 			$scope.url = url;
 		};
+
+		$scope.addTagToImages = function(tag,imageObj){
+			imageObj.tags(tag);
+			$http({
+				method:'PUT',
+				url: '/users/db/save',
+				data: $scope.resources
+			}).
+			success(function(data){
+				//Tag addedd
+			});
+		};
 	}]);
