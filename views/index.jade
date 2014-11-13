@@ -5,10 +5,10 @@ block content
 		header#tagImages.loading(ng-if='toTaggedImages.length>0', ng-class='{"starting" : loading < 0.5, "finished" : loading >= 0.5,"open" : loading > 1 }')
 			section.tagImages(ng-if='loading > 1')
 				article.imageResource.col-xs-1-1.col-sm-1-2(ng-repeat='image in toTaggedImages')
-					img(src="{{image}}")
+					img(src="{{image.path}}")
 					.tagSection
 						i.fa.fa-tags
-						input(type='text',placeholder='Type tag here')
+						input(type='text',placeholder='Type tag here', ng-model="image.tagToAdd" ng-keypress="addTagToNoTagged(image,$event,image.tagToAdd)")
 			.openDialog(ng-click="openTagImages()")
 				h2
 					i.fa.fa-exclamation-triangle

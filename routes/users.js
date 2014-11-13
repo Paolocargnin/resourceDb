@@ -47,6 +47,17 @@ router.get('/db/', function(req, res) {
 	});
 });
 
+/* GET users listing. */
+router.post('/db/', function(req, res) {
+	res.json(req);
+	// fs = require('fs');
+	// fs.readFile(__dirname+'/../public/json/people.json', 'utf8', function (err,data) {
+	// 	if (err) {
+	// 		return console.log(err);
+	// 	}
+		
+	// });
+});
 
 /* GET users listing. */
 router.get('/images/', function(req, res) {

@@ -14,7 +14,7 @@ angular.module('httpExample', [])
 			url: '/users/db/',
 		}).
 		success(function(data){
-			$scope.resources=JSON.parse(data);
+			$scope.resources=JSON.parse(JSON.parse(data));
 			$scope.taggedImages= _.pluck($scope.resources.images, 'path');
 			$http({
 				method:'GET',
@@ -23,7 +23,14 @@ angular.module('httpExample', [])
 			success(function(data){
 				$scope.loading=1;
 				$scope.realImages=data;
-				$scope.toTaggedImages= _.difference($scope.realImages, $scope.taggedImages);
+				$scope.toTaggedImagesPaths= _.difference($scope.realImages, $scope.taggedImages);
+				_.each($scope.toTaggedImagesPaths,function(path){
+					$scope.toTaggedImages.push({
+						path: path,
+						tags:[],
+						tagToAdd: ''
+					});
+				});
 			});
 		});
 
@@ -31,20 +38,28 @@ angular.module('httpExample', [])
 			$scope.loading = $scope.loading == 1.5 ? 1 : 1.5;
 		}
 
-		$scope.updateModel = function(method, url) {
-			$scope.method = method;
-			$scope.url = url;
+		$scope.addTagToNoTagged = function(imageObj,keyEvent){
+			if (keyEvent.which === 13){
+				$scope.updateImages(imageObj);		
+			}
 		};
+		$scope.updateImages = function(imageObj){
+			if (imageObj.stillTagged || imageObj.stillTagged===0){
+				$scope.resources.images[imageObj.stillTagged]=imageObj;				
+			}else{
+				$scope.resources.images.push(imageObj);
+				imageObj.stillTagged = $scope.resources.images.length;
+			}
 
-		$scope.addTagToImages = function(tag,imageObj){
-			imageObj.tags(tag);
-			$http({
-				method:'PUT',
-				url: '/users/db/save',
-				data: $scope.resources
-			}).
+			$scope.saveResource(function(data){
+				debugger;
+				console.log('Save');
+			});
+		};
+		$scope.saveResource = function(callbackSuccess){
+			$http.post('/users/db',$scope.resources).
 			success(function(data){
-				//Tag addedd
+				callbackSuccess(data)
 			});
 		};
 	}]);
