@@ -4,7 +4,7 @@ block content
 	section(ng-controller='imageController')
 		header#tagImages.loading(ng-if='toTaggedImages.length>0', ng-class='{"starting" : loading < 0.5, "finished" : loading >= 0.5,"open" : loading > 1 }')
 			section.tagImages(ng-if='loading > 1')
-				article.imageResource.col-xs-1-1.col-sm-1-2(ng-repeat='image in toTaggedImages')
+				article.imageResource.col-xs-1-1.col-sm-1-2(ng-repeat='image in resources.images')
 					img(src="{{image.path}}")
 					.tagSection
 						i.fa.fa-tags

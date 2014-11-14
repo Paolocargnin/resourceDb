@@ -25,10 +25,9 @@ angular.module('httpExample', [])
 				$scope.realImages=data;
 				$scope.toTaggedImagesPaths= _.difference($scope.realImages, $scope.taggedImages);
 				_.each($scope.toTaggedImagesPaths,function(path){
-					$scope.toTaggedImages.push({
+					$scope.resources.images.push({
 						path: path,
-						tags:[],
-						tagToAdd: ''
+						tags:[]
 					});
 				});
 			});
@@ -38,28 +37,18 @@ angular.module('httpExample', [])
 			$scope.loading = $scope.loading == 1.5 ? 1 : 1.5;
 		}
 
-		$scope.addTagToNoTagged = function(imageObj,keyEvent){
+		$scope.addTag = function(imageObj,keyEvent){
 			if (keyEvent.which === 13){
-				$scope.updateImages(imageObj);		
+				imageObj.tags.push(imageObj.tagToAdd);
+				$scope.saveResource();
 			}
-		};
-		$scope.updateImages = function(imageObj){
-			if (imageObj.stillTagged || imageObj.stillTagged===0){
-				$scope.resources.images[imageObj.stillTagged]=imageObj;				
-			}else{
-				$scope.resources.images.push(imageObj);
-				imageObj.stillTagged = $scope.resources.images.length;
-			}
-
-			$scope.saveResource(function(data){
-				debugger;
-				console.log('Save');
-			});
 		};
 		$scope.saveResource = function(callbackSuccess){
 			$http.post('/users/db',$scope.resources).
 			success(function(data){
-				callbackSuccess(data)
+				if (callbackSuccess){
+					callbackSuccess(data);
+				}
 			});
 		};
 	}]);
