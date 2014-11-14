@@ -4579,6 +4579,19 @@ input[type="text"]:focus {
   padding: 0;
   margin: 15px;
 }
+.imageResource ul {
+  position: absolute;
+  bottom: 100%;
+  margin: 0;
+  padding: 0;
+}
+.imageResource ul li {
+  color: #fff;
+  background: #E32F21;
+  list-style: none;
+  display: inline-block;
+  padding: 3px 5px;
+}
 .imageResource img {
   max-width: 100%;
 }

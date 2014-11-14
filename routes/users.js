@@ -49,14 +49,23 @@ router.get('/db/', function(req, res) {
 
 /* GET users listing. */
 router.post('/db/', function(req, res) {
-	res.json(req);
-	// fs = require('fs');
-	// fs.readFile(__dirname+'/../public/json/people.json', 'utf8', function (err,data) {
-	// 	if (err) {
-	// 		return console.log(err);
-	// 	}
-		
-	// });
+	var objToSave =  {images:[]};
+
+	req.body.images.forEach(function(i){
+		objToSave.images.push({
+			path:i.path,
+			tags:i.tags
+		})
+	});
+
+	console.log(objToSave);
+
+	fs = require('fs');
+	fs.writeFile(__dirname+'/../public/json/people.json', JSON.stringify(objToSave) , 'utf8', function (err,data) {
+		if (err) {
+			return console.log(err);
+		}		
+	});
 });
 
 /* GET users listing. */

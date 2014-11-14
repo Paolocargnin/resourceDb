@@ -2,6 +2,19 @@
 	position: relative;
 	padding:0;
 	margin: $margin;
+	ul{ //tags
+		position: absolute;
+		bottom:100%;
+		margin: 0;
+		padding: 0;
+		li{
+			color:#fff;
+			background: $thirdColor;
+			list-style: none;
+			display: inline-block;
+			padding: 3px $padding/2; 
+		}
+	}
 	img {
 		max-width:100%;
 	}

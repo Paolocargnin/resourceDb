@@ -23,11 +23,12 @@ angular.module('httpExample', [])
 			success(function(data){
 				$scope.loading=1;
 				$scope.realImages=data;
-				$scope.toTaggedImagesPaths= _.difference($scope.realImages, $scope.taggedImages);
+				$scope.toTaggedImagesPaths =  _.difference($scope.realImages, $scope.taggedImages);
 				_.each($scope.toTaggedImagesPaths,function(path){
 					$scope.resources.images.push({
 						path: path,
-						tags:[]
+						tags:[],
+						toTag : true
 					});
 				});
 			});
@@ -40,11 +41,14 @@ angular.module('httpExample', [])
 		$scope.addTag = function(imageObj,keyEvent){
 			if (keyEvent.which === 13){
 				imageObj.tags.push(imageObj.tagToAdd);
+				imageObj.tagToAdd='';
 				$scope.saveResource();
 			}
 		};
 		$scope.saveResource = function(callbackSuccess){
-			$http.post('/users/db',$scope.resources).
+			//pulisco la resource
+			var objToSave = $scope.resources;
+			$http.post('/users/db', objToSave ).
 			success(function(data){
 				if (callbackSuccess){
 					callbackSuccess(data);
